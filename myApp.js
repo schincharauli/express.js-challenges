@@ -30,11 +30,11 @@ app.use("/public", express.static(__dirname + "/public"));
 
 app.get(
   "/now",
-  function (req, res, next) {
-    req.time = Date().toString();
+  (req, res, next) => {
+    req.time = new Date().toString();
     next();
   },
-  function (req, res) {
+  (req, res) => {
     res.json({ time: req.time });
   }
 );
