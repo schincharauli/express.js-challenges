@@ -22,8 +22,19 @@ app.use("/public", express.static(__dirname + "/public"));
 
 // console.log(style);
 
-app.use(function (req, res, next) {
-  let string = req.method + " " + req.path + " -  " + req.ip;
-  console.log(string);
-  next();
-});
+// app.use(function (req, res, next) {
+//   let string = req.method + " " + req.path + " -  " + req.ip;
+//   console.log(string);
+//   next();
+// });
+
+app.get(
+  "/now",
+  function (req, res, next) {
+    req.time = Date().toString();
+    next();
+  },
+  function (req, res) {
+    res.json({ time: req.time });
+  }
+);
