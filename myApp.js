@@ -4,6 +4,8 @@ let app = express();
 
 module.exports = app;
 
+// module.exports = echo;
+
 absolutePath = __dirname + "/views/index.html";
 
 app.get("/", (req, res) => {
@@ -38,3 +40,8 @@ app.get(
     res.json({ time: req.time });
   }
 );
+
+app.get("/:word/echo", (req, res) => {
+  const { word } = req.params;
+  res.json({ echo: word });
+});
