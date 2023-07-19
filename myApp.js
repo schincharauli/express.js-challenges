@@ -1,15 +1,8 @@
+require("dotenv").config();
 let express = require("express");
 let app = express();
 
-// console.log("Hello World");
-
 module.exports = app;
-
-// app.get("/", (req, res) => {
-//   res.send("Hello Express");
-// });
-
-// console.log(app);
 
 absolutePath = __dirname + "/views/index.html";
 
@@ -19,6 +12,14 @@ app.get("/", (req, res) => {
 
 app.use("/public", express.static(__dirname + "/public"));
 
+const style = process.env.MESSAGE_STYLE;
+
 app.get("/json", (req, res) => {
-  res.json({ message: "Hello json" });
+  if (style === "uppercase") {
+    res.json({ message: "HELLO JSON" });
+  } else {
+    res.json({ message: "Hello" });
+  }
 });
+
+console.log(style);
