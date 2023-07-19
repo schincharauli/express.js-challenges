@@ -1,10 +1,9 @@
 require("dotenv").config();
-let express = require("express");
+const express = require("express");
+const bodyParser = require("body-parser");
 let app = express();
 
 module.exports = app;
-
-// module.exports = echo;
 
 absolutePath = __dirname + "/views/index.html";
 
@@ -14,21 +13,19 @@ app.get("/", (req, res) => {
 
 app.use("/public", express.static(__dirname + "/public"));
 
-// app.get("/json", (req, res) => {
-//   if (process.env.MESSAGE_STYLE === "uppercase") {
-//     res.json({ message: "HELLO JSON" });
-//   } else {
-//     res.json({ message: "Hello json" });
-//   }
-// });
+app.get("/json", (req, res) => {
+  if (process.env.MESSAGE_STYLE === "uppercase") {
+    res.json({ message: "HELLO JSON" });
+  } else {
+    res.json({ message: "Hello json" });
+  }
+});
 
-// console.log(style);
-
-// app.use(function (req, res, next) {
-//   let string = req.method + " " + req.path + " -  " + req.ip;
-//   console.log(string);
-//   next();
-// });
+app.use(function (req, res, next) {
+  let string = req.method + " " + req.path + " -  " + req.ip;
+  console.log(string);
+  next();
+});
 
 app.get(
   "/now",
@@ -43,4 +40,13 @@ app.get(
 
 app.get("/name", (req, res) => {
   res.json({ name: req.query.first + " " + req.query.last });
+});
+
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
+app.post("/name", function (req, res) {
+  // Handle the data in the request
+  var string = req.body.first + " " + req.body.last;
+  res.json({ name: string });
 });
